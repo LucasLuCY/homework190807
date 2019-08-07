@@ -1,0 +1,74 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.0.1
+-- httpswww.phpmyadmin.net
+--
+-- 主機： 127.0.0.1
+-- 產生時間： 
+-- 伺服器版本： 10.3.16-MariaDB
+-- PHP 版本： 7.3.7
+
+SET SQL_MODE = NO_AUTO_VALUE_ON_ZERO;
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = +0000;
+
+
+!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT ;
+!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS ;
+!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION ;
+!40101 SET NAMES utf8mb4 ;
+
+--
+-- 資料庫： `shopping_mall`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `user_data`
+--
+
+CREATE TABLE `user_data` (
+  `uid` int(11) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `nickname` varchar(20) DEFAULT NULL,
+  `tel` varchar(20) DEFAULT NULL,
+  `addr` varchar(255) DEFAULT NULL,
+  `gender` enum('boy','girl') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `user_data`
+--
+
+INSERT INTO `user_data` (`uid`, `username`, `password`, `nickname`, `tel`, `addr`, `gender`) VALUES
+(1, 'root', '0000', 'admin', '0912345678', '台中市南屯區公益路二段號', 'boy'),
+(2, 'member1', '1234', '安安', '0912121212', '台中市某區私立國民小學', 'girl'),
+(3, 'member2', '1234', '早安', '0912345432', '台中市某區私立國民中學', 'boy');
+
+--
+-- 已傾印資料表的索引
+--
+
+--
+-- 資料表索引 `user_data`
+--
+ALTER TABLE `user_data`
+  ADD PRIMARY KEY (`uid`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
+--
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `user_data`
+--
+ALTER TABLE `user_data`
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+COMMIT;
+
+!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT ;
+!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS ;
+!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION ;

@@ -3,6 +3,11 @@ Shopping Cart Program
 本購物車樣板採用 https://colorlib.com/wp/template/winkel/
 
 # ------新增項目------
+#MySQL
+1. 相關資料放置於MySQL資料夾
+2. Database: shopping_mall(utf8)
+3. Table: user_data
+
 # config.php
 1. 定義資料庫連線資料
 
