@@ -3,7 +3,7 @@ Shopping Cart Program
 本購物車樣板採用 https://colorlib.com/wp/template/winkel/
 
 # ------新增項目------
-#MySQL
+# MySQL
 1. 相關資料放置於MySQL資料夾
 2. Database: shopping_mall(utf8)
 3. Table: user_data
@@ -19,7 +19,7 @@ Shopping Cart Program
 5. 當該次驗證成功或是有以往session紀錄則自動跳轉index.php
 
 # index.php
-1. navbar 新增 login, logout, member info三種狀態
+1. navbar 新增 login, logout, member info三個新標籤
 2. 在未登入時, 只顯示login而登入後則顯示logout, member info
 3. 點擊member info跳出目前會員資料彈, 並用ajax取目前資料
 4. 在member info彈窗中可以點擊Save Changes修改會員資料

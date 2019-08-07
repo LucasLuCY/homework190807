@@ -1,3 +1,21 @@
+<?php
+	include_once("config.php");
+	session_start();
+
+	if(isset($_GET['logout'])){
+		unset($_SESSION['uid']);
+	}
+
+	$query = "SELECT * FROM product";
+    $result = $db->query($query);
+
+    while ($row = $result->fetch())
+    {
+        $productList['product'.$row['no']] = $row;
+	}
+	
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -50,15 +68,15 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Winkel</a>
+	      <a class="navbar-brand" href="index.php">Winkel</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item dropdown active">
+	          <li class="nav-item"><a href="index.php" class="nav-link">Home</a></li>
+	          <!-- <li class="nav-item dropdown active">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
               	<a class="dropdown-item" href="shop.html">Shop</a>
@@ -69,14 +87,86 @@
             </li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> -->
+			<li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[<span id="cartCount">0</span>]</a></li>
+<?php
+	
+	if(isset($_SESSION['uid'])){
+echo <<<EOF
+		<li class="nav-item"><a href="index.php?logout=true" class="nav-link">Logout</a></li>
+		<li class="nav-item"><a id="memberInfo" class="nav-link" data-toggle="modal" data-target="#exampleModal">Member info</a></li>
+EOF;
+	}else{
+		echo '<li class="nav-item"><a href="login.php" class="nav-link">Login</a></li>';
+	}
+?>
 
 	        </ul>
 	      </div>
 	    </div>
 	  </nav>
-    <!-- END nav -->
+	<!-- END nav -->
+	
+		<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Member info</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form action="setMemberInfo.php" method="POST">
+					<div class="modal-body">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="nickname">@Nickname</span>
+							</div>
+							<input id="nicknameI" type="text" class="form-control" placeholder="nickname" aria-label="nickname" aria-describedby="nickname" name="nickname" value="">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="tel">@Tel</span>
+							</div>
+							<input id="telI" type="text" class="form-control" placeholder="tel" aria-label="tel" aria-describedby="tel" name="tel" value="">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="addr">@Address</span>
+							</div>
+							<input id="addrI" type="text" class="form-control" placeholder="address" aria-label="addr" aria-describedby="addr" name="addr" value="">
+						</div>
+						<!-- <div class="input-group">
+							Gender
+						</div>
+
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<div class="input-group-text">
+								<input type="radio" name="gender" value="boy" aria-label="Radio button for following text input">
+								</div>
+							</div>
+							<div class="form-control pt-2" aria-label="Text input with radio button">boy</div>
+
+							<div class="input-group-prepend">
+								<div class="input-group-text">
+								<input type="radio" aria-label="Radio button for following text input" name="gender" value="girl">
+								</div>
+							</div>
+							<div class="form-control pt-2" aria-label="Text input with radio button">girl</div>
+						</div> -->
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save changes</button>
+					</div>
+				
+				</form>
+	
+			</div>
+		</div>
+	</div>
 
     <div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
       <div class="container">
@@ -311,6 +401,53 @@
 		            }
 		    });
 		    
+		});
+	</script>
+
+	<script>
+		$(document).ready(function () {
+			// if click member info, use ajax get member info
+			$("a#memberInfo").bind('click', function () {
+				$.ajax({
+					url: "getMemberInfo.php"
+					}).done(function($response) {
+						$response = JSON.parse($response);
+						$("#nicknameI").val($response['nickname']);
+						$("#telI").val($response['tel']);
+						$("#addrI").val($response['addr']);
+				});
+			});
+
+			//Count for shopping cart
+			$(".add-to-cart").click(function(){
+				console.log($(this).attr("id"));
+				
+				let productCount = localStorage.getItem($(this).attr("id"));
+				if(productCount == null) productCount = 0;
+				productCount = parseInt(productCount) + 1;
+				localStorage.setItem($(this).attr("id"), productCount)
+
+				cartCount = parseInt($("#cartCount").html())  + 1;
+				$("#cartCount").html(cartCount);
+
+				
+			})
+			
+			var cartCount = 0;
+
+			let storage = window.localStorage;
+			for(let i = 0 ; i < storage.length; i++){
+				// console.log(storage.key(i));
+				// console.log(storage.getItem(storage.key(i)));
+				nCount = parseInt(storage.getItem(storage.key(i)));
+				cartCount += parseInt(nCount);
+				// console.log(cartCount);
+			}
+			$("#cartCount").html(cartCount);
+
+			function clearLocalStorage(){
+				localStorage.clear();
+			}
 		});
 	</script>
     
