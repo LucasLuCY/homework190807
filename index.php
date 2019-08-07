@@ -79,7 +79,7 @@
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> -->
-			  <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+			  <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[<span id="cartCount">0</span>]</a></li>
 <?php
 	
 	if(isset($_SESSION['uid'])){
@@ -298,7 +298,7 @@ EOF;
 	    						</div>
 	    					</div>
 	    					<p class="bottom-area d-flex px-3">
-    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a id="product1" href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
     							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
     						</p>
     					</div>
@@ -326,7 +326,7 @@ EOF;
 	    						</div>
 	    					</div>
     						<p class="bottom-area d-flex px-3">
-    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a id="product2" href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
     							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
     						</p>
     					</div>
@@ -354,7 +354,7 @@ EOF;
 	    						</div>
 	    					</div>
     						<p class="bottom-area d-flex px-3">
-    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a id="product3" href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
     							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
     						</p>
     					</div>
@@ -382,7 +382,7 @@ EOF;
 	    						</div>
 	    					</div>
     						<p class="bottom-area d-flex px-3">
-    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a id="product4" href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
     							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
     						</p>
     					</div>
@@ -456,7 +456,7 @@ EOF;
 	    						</div>
 	    					</div>
     						<p class="bottom-area d-flex px-3">
-    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a id="product5" href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
     							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
     						</p>
     					</div>
@@ -484,7 +484,7 @@ EOF;
 	    						</div>
 	    					</div>
     						<p class="bottom-area d-flex px-3">
-    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a id="product6" href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
     							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
     						</p>
     					</div>
@@ -512,7 +512,7 @@ EOF;
 	    						</div>
 	    					</div>
     						<p class="bottom-area d-flex px-3">
-    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a id="product7" href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
     							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
     						</p>
     					</div>
@@ -540,7 +540,7 @@ EOF;
 	    						</div>
 	    					</div>
     						<p class="bottom-area d-flex px-3">
-    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a id="product8" href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
     							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
     						</p>
     					</div>
@@ -801,6 +801,7 @@ EOF;
 
 	<script>
 		$(document).ready(function () {
+			// if click member info, use ajax get member info
 			$("a#memberInfo").bind('click', function () {
 				$.ajax({
 					url: "getMemberInfo.php"
@@ -811,6 +812,37 @@ EOF;
 						$("#addrI").val($response['addr']);
 				});
 			});
+
+			//Count for shopping cart
+			$(".add-to-cart").click(function(){
+				console.log($(this).attr("id"));
+				
+				let productCount = localStorage.getItem($(this).attr("id"));
+				if(productCount == null) productCount = 0;
+				productCount = parseInt(productCount) + 1;
+				localStorage.setItem($(this).attr("id"), productCount)
+
+				cartCount = parseInt($("#cartCount").html())  + 1;
+				$("#cartCount").html(cartCount);
+
+				
+			})
+			
+			var cartCount = 0;
+
+			let storage = window.localStorage;
+			for(let i = 0 ; i < storage.length; i++){
+				// console.log(storage.key(i));
+				// console.log(storage.getItem(storage.key(i)));
+				nCount = parseInt(storage.getItem(storage.key(i)));
+				cartCount += parseInt(nCount);
+				// console.log(cartCount);
+			}
+			$("#cartCount").html(cartCount);
+
+			function clearLocalStorage(){
+				localStorage.clear();
+			}
 		});
 	</script>
   </body>
