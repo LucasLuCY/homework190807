@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
+
   </head>
   <body class="goto-here">
 		<div class="py-1 bg-black">
@@ -183,19 +184,45 @@ EOF;
 			<div class="container">
 				<div class="row">
     			<div class="col-md-12 ftco-animate">
-    				<div class="cart-list">
+    				<div id="cartContent" class="cart-list">
 	    				<table class="table">
 						    <thead class="thead-primary">
 						      <tr class="text-center">
-						        <th>&nbsp;</th>
-						        <th>&nbsp;</th>
+						        <!-- <th>&nbsp;</th> -->
+						        <!-- <th>&nbsp;</th> -->
 						        <th>Product</th>
 						        <th>Price</th>
 						        <th>Quantity</th>
-						        <th>Total</th>
+						        <!-- <th>Total</th> -->
 						      </tr>
 						    </thead>
-						    <tbody>
+
+							<tbody>
+								<tr v-for="(item, index) in message" class="text-center">
+									
+									<!-- <td class="image-prod"><div class="img" style="background-image:url(images/product-3.jpg);"></div></td> -->
+									
+									<td class="product-name">
+										<h3>{{product[index].name}}</h3>
+										<p>{{product[index].content}}</p>
+									</td>
+									
+									<td class="price">${{product[index].price}}</td>
+									
+									<td class="quantity">
+										<div class="input-group mb-3">
+										<input type="text" name="quantity" class="quantity form-control input-number" v-model="item" min="1" max="100">
+										</div>
+									</td>
+									
+									<!-- <td v-model="" class="total">{{ product[index].price * item }}</td> -->
+						      </tr>
+							
+							</tbody>
+
+					
+
+						    <!-- <tbody>
 						      <tr class="text-center">
 						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
 						        
@@ -215,7 +242,7 @@ EOF;
 					          </td>
 						        
 						        <td class="total">$4.90</td>
-						      </tr><!-- END TR-->
+						      </tr>
 
 						      <tr class="text-center">
 						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
@@ -236,15 +263,18 @@ EOF;
 					          </td>
 						        
 						        <td class="total">$15.70</td>
-						      </tr><!-- END TR-->
-						    </tbody>
+						      </tr>
+						    </tbody> -->
+
+
 						  </table>
 					  </div>
     			</div>
     		</div>
+
     		<div class="row justify-content-center">
     			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
-    				<div class="cart-total mb-3">
+    				<!-- <div class="cart-total mb-3">
     					<h3>Cart Totals</h3>
     					<p class="d-flex">
     						<span>Subtotal</span>
@@ -263,10 +293,11 @@ EOF;
     						<span>Total</span>
     						<span>$17.60</span>
     					</p>
-    				</div>
+    				</div> -->
     				<p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
     			</div>
     		</div>
+
 			</div>
 		</section>
 
@@ -343,8 +374,6 @@ EOF;
         </div>
       </div>
     </footer>
-    
-  
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
@@ -449,6 +478,44 @@ EOF;
 				localStorage.clear();
 			}
 		});
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		var productList;
+		productList = <?php 
+			print_r(json_encode($productList)); 
+		?>;
+		
+		console.log(productList);
+
+		var localDate = [];
+
+		for (var i = 0; i < localStorage.length; i++){
+    		key = localStorage.key(i);
+			value = localStorage.getItem(localStorage.key(i));
+
+			localDate[key] = value;
+	
+		
+			console.log(key);
+			console.log(value);
+			console.log(localDate);
+		
+		}
+
+			// var localDateJSON = JSON.stringify(localDate);
+			var localDateJSON = Object.assign({}, localDate);
+			console.log(localDateJSON);
+
+		var cartContent = new Vue({
+			el: '#cartContent',
+			data: {
+				message: localDateJSON,
+				product: productList
+			}
+		})
+
 	</script>
     
   </body>

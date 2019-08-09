@@ -32,3 +32,8 @@ Shopping Cart Program
 # setMemberInfo.php
 1. 修改個人頁面資料
 2. 檢查如果沒有通過驗證自動跳轉回index
+
+# cart.php
+1. 取得用戶在購物車購買的商品
+2. 取得資料庫中的商品資訊
+3. 使用vue重複迴圈顯示商品
