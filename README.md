@@ -6,7 +6,7 @@ Shopping Cart Program
 # MySQL
 1. 相關資料放置於MySQL資料夾
 2. Database: shopping_mall(utf8)
-3. Table: user_data
+3. Table: user_data, product
 
 # config.php
 1. 定義資料庫連線資料
@@ -37,3 +37,4 @@ Shopping Cart Program
 1. 取得用戶在購物車購買的商品
 2. 取得資料庫中的商品資訊
 3. 使用vue重複迴圈顯示商品
+4. 點擊送出，跳出成功訊息並清除LocalStorage
